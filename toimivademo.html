@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+ <body>
+  <p>Tested only in Mozilla</p>
+  <video id="video" autoplay="autoplay" controls="false"></video>
+  <script>
+   var videoStream = null;
+   var video = document.getElementById("video");
+   window.navigator = window.navigator || {};
+   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+   var createSrc = window.URL ? window.URL.createObjectURL : function(stream) {return stream;};
+
+   navigator.getUserMedia( 
+    {video: true}, 
+    function(stream) {videoStream = stream; video.src = createSrc(stream); video.play();},
+    function(error) {console.log("Video capture error: ", error.code);}
+   );
+  </script>
+ </body>
+</html>

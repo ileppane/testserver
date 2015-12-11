@@ -1,0 +1,35 @@
+<html>
+
+   <head>
+      <script>
+         $(document).ready(function() {
+			
+            $("#driver").click(function(event){
+				
+               $.post( 
+                  "test.html",
+                  { name: "Zara" },
+                  function(data) {
+                     $('#stage').html(data);
+                  }
+               );
+					
+            });
+				
+         });
+      </script>
+   </head>
+	
+   <body>
+	
+      <p>Click on the button to load test.html file -</p>
+		
+      <div id = "stage">
+         STAGE
+      </div>
+		
+      <input type = "button" id = "driver" value = "Load Data">
+		
+   </body>
+	
+</html>

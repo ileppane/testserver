@@ -1,0 +1,45 @@
+<html>
+
+<p>This website will take a still shot from your webcam in 5 seconds</p>
+<video id="video" autoplay="autoplay" controls="false"></video>
+<canvas id="canvas"></canvas>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+ // http://matthewschrager.com/2013/05/25/how-to-take-webcam-pictures-from-browser-and-store-server-side
+ window.navigator = window.navigator || {};
+ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;	
+ var createSrc = window.URL ? window.URL.createObjectURL : function(stream) {return stream;};
+ navigator.getUserMedia(
+    {video: true},
+    function(stream) {
+    		      var video = document.getElementById("video");	// <video id=video>
+    		      var canvas = document.getElementById("canvas"); 	// <canvas id=canvas>
+		      var videoStream = stream;
+		      video.src = createSrc(stream);
+		      
+		      setTimeout(function(){
+		       
+			canvas.width = video.videoWidth; 
+     		        canvas.height = video.videoHeight; 
+     		        canvas.getContext('2d').drawImage(video, 0, 0);
+     		        var imgData = canvas.toDataURL('img/png'); 
+     		        imgData = imgData.replace('data:image/png;base64,', ''); // remove extra data from start of the string
+     		        var postData = JSON.stringify({ imageData: imgData }); //JSON-enciding
+     		        //$.ajax({url: 'vast.html', type: "POST", data: postData, contentType: "application/json"});
+			$.ajax({  // testataan toimiiko ajaxin get
+		         url: "/test.html",
+  			 cache: false,
+  			 success: function(html){
+   			  $("#results").append(html);
+      			 }
+   			});
+		      }, 5000); // wait 5 seconds
+    },
+    function(error) {console.log("Video capture error: ", error.code);}
+ );
+</script>
+
+<div id="results"></div>
+
+</html>
