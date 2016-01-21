@@ -23,10 +23,21 @@
 			canvas.width = video.videoWidth; 
      		        canvas.height = video.videoHeight; 
      		        canvas.getContext('2d').drawImage(video, 0, 0);
-     		        var imgData = canvas.toDataURL('img/png'); 
+     		        var imgData = canvas.toDataURL('img/png');
+			var testData = {name:"nimi", age:"1"};
      		        imgData = imgData.replace('data:image/png;base64,', ''); // remove extra data from start of the string
      		        var postData = JSON.stringify({ imageData: imgData }); //JSON-enciding
-     		        //$.ajax({url: 'vast.html', type: "POST", data: postData, contentType: "application/json"});
+
+			// tuottaa 501, yrittää siirtää testDataa toiselle sivulle
+			//$.ajax({url: "AJAX_POST_URL", type: "POST", data: testData, success: function(data, textStatus, jqXHR) {}, error: function (jqXHR, textStatus, errorThrown) {} });
+			/*$.ajax({
+			 url: "/", 
+			 type: "POST", 
+			 data: testData, 
+			 dataType: "json"});
+			*/
+
+			// tuottaa 200 ja printtaa test.html-filen sisällön alareunan results-diviin    		        
 			$.ajax({  // testataan toimiiko ajaxin get
 		         url: "/test.html",
   			 cache: false,
